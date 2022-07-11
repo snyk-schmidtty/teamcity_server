@@ -1,0 +1,17 @@
+version: '2.1'
+services:
+  server:
+    image: "jetbrains/teamcity-server:latest"
+    ports:
+    - "8111:8111"
+    volumes:
+    - /<your path>/teamcity/data:/data/teamcity_server/datadir
+    - /<your path>/teamcity/logs:/opt/teamcity/logs
+  team-city-agent-1:
+    image: "jetbrains/teamcity-agent:latest"
+    privileged: true
+    volumes:
+     - /<your path>/teamcity/conf:/data/teamcity_agent/conf
+    environment:
+     - SERVER_URL=http://server:8111
+     - DOCKER_IN_DOCKER=start
